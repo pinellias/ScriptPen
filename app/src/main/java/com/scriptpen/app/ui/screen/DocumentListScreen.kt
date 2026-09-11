@@ -140,7 +140,9 @@ fun DocumentListScreen(
             },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.rename(doc.id, renameText.ifBlank { "未命名剧本" })
+                    scope.launch {
+                        viewModel.rename(doc.id, renameText.ifBlank { "未命名剧本" })
+                    }
                     renameTarget = null
                 }) { Text("确定") }
             },

@@ -2,6 +2,7 @@ package com.scriptpen.app
 
 import android.app.Application
 import com.scriptpen.app.data.AppDatabase
+import com.scriptpen.app.data.SettingsRepository
 
 class ScriptPenApplication : Application() {
 
