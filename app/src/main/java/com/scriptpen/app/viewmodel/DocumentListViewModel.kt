@@ -4,12 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.scriptpen.app.data.AppDatabase
 import com.scriptpen.app.data.ScriptDocument
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class DocumentListViewModel(private val database: AppDatabase) : ViewModel() {
 
-    val documents: Flow<List<ScriptDocument>> = database.scriptDao().observeAll()
+    val documents: StateFlow<List<ScriptDocument>> = database.scriptDao().observeAll()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
 
     fun delete(doc: ScriptDocument) = viewModelScope.launch {
         database.scriptDao().delete(doc)

@@ -64,7 +64,7 @@ fun DocumentListScreen(
                 DocumentListViewModel(db) as T
         }
     )
-    val documents by viewModel.documents.collectAsState(initial = emptyList())
+    val documents by viewModel.documents.collectAsState()
     val scope = rememberCoroutineScope()
 
     var showDeleteId by remember { mutableStateOf<Long?>(null) }

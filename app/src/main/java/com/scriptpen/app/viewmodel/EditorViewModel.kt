@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -32,6 +33,7 @@ class EditorViewModel(
 
     val stats: StateFlow<WordStats> = content
         .debounce(200)
+        .map { WordCounter.count(it) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -97,7 +99,6 @@ class EditorViewModel(
         val before = content.value
         val after = before.replace(from, to)
         content.value = after
-        val count = (before.length - after.length) / (before.length - from.length).coerceAtLeast(1)
         val n = countOccurrences(before, from)
         scheduleSave()
         return n
