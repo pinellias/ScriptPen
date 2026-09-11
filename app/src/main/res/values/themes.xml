@@ -1,0 +1,4 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Compose 应用只需一个简单的 NoActionBar 主题作为窗口背景 -->
+    <style name="Theme.ScriptPen" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
